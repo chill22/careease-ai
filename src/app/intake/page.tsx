@@ -132,10 +132,7 @@ export default function Intake() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Your relationship</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select one" />
@@ -187,20 +184,14 @@ export default function Intake() {
                               <FormControl>
                                 <Checkbox
                                   checked={field.value?.includes(item)}
-                                  onCheckedChange={(checked) => {
-                                    return checked
+                                  onCheckedChange={(checked) =>
+                                    checked
                                       ? field.onChange([...field.value, item])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== item
-                                          )
-                                        );
-                                  }}
+                                      : field.onChange(field.value?.filter((v) => v !== item))
+                                  }
                                 />
                               </FormControl>
-                              <FormLabel className="font-normal">
-                                {item}
-                              </FormLabel>
+                              <FormLabel className="font-normal">{item}</FormLabel>
                             </FormItem>
                           )}
                         />
@@ -217,28 +208,17 @@ export default function Intake() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Mobility</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="How do they get around?" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="independent">
-                              Walks independently
-                            </SelectItem>
-                            <SelectItem value="cane">
-                              Uses cane or walker
-                            </SelectItem>
-                            <SelectItem value="wheelchair">
-                              Uses wheelchair
-                            </SelectItem>
-                            <SelectItem value="bedbound">
-                              Mostly bedbound
-                            </SelectItem>
+                            <SelectItem value="independent">Walks independently</SelectItem>
+                            <SelectItem value="cane">Uses cane or walker</SelectItem>
+                            <SelectItem value="wheelchair">Uses wheelchair</SelectItem>
+                            <SelectItem value="bedbound">Mostly bedbound</SelectItem>
                           </SelectContent>
                         </Select>
                       </FormItem>
@@ -252,14 +232,9 @@ export default function Intake() {
                       render={({ field }) => (
                         <FormItem className="flex items-center space-x-3">
                           <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
+                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            Has memory issues or confusion
-                          </FormLabel>
+                          <FormLabel className="font-normal">Has memory issues or confusion</FormLabel>
                         </FormItem>
                       )}
                     />
@@ -269,14 +244,9 @@ export default function Intake() {
                       render={({ field }) => (
                         <FormItem className="flex items-center space-x-3">
                           <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
+                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            Needs help eating or preparing meals
-                          </FormLabel>
+                          <FormLabel className="font-normal">Needs help eating or preparing meals</FormLabel>
                         </FormItem>
                       )}
                     />
@@ -286,14 +256,9 @@ export default function Intake() {
                       render={({ field }) => (
                         <FormItem className="flex items-center space-x-3">
                           <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
+                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            Needs help bathing or dressing
-                          </FormLabel>
+                          <FormLabel className="font-normal">Needs help bathing or dressing</FormLabel>
                         </FormItem>
                       )}
                     />
@@ -302,7 +267,7 @@ export default function Intake() {
               </div>
             </div>
 
-            {/* Main Challenges */}
+            {/* Main Challenges – FIXED THIS SECTION */}
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-emerald-100">
               <FormField
                 control={form.control}
@@ -311,4 +276,42 @@ export default function Intake() {
                   <FormItem>
                     <FormLabel>
                       What’s the hardest part of caregiving right now?
-                    </
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="e.g. I’m exhausted by 6pm, Mom wanders at night, I can’t find respite care…"
+                        className="min-h-32"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Submit */}
+            <div className="text-center">
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isLoading}
+                className="text-lg px-12 py-7 bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-lg"
+              >
+                {isLoading ? (
+                  <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                ) : (
+                  <ArrowRight className="mr-2 h-6 w-6" />
+                )}
+                {isLoading ? "Creating your plan…" : "Show Me My Free Care Plan"}
+              </Button>
+              <p className="mt-4 text-sm text-gray-600">
+                Takes about 15 seconds • Completely private
+              </p>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
+  );
+}
